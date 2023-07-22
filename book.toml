@@ -1,0 +1,6 @@
+[book]
+authors = ["Arindam Choudhury"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Arindam's Notes"
