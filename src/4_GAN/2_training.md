@@ -316,8 +316,8 @@ Frechet Inception Distance or FID measures the distance between two multinomial 
 ![Alt text](images/screen-shot-2022-05-11-at-4.30.32-pm.jpeg)
 
 The mathematical equation for determining FID is:
-
-$$ d={{\Vert m_r​−m_f​  \Vert }_2}^2​+Tr(C_r​+C_f​−2(C_r ​C_f​)^{1/2}) $$
+ 
+$$ d = { {\Vert m_r​−m_f​ \Vert }_2}^2 ​+ Tr(C_r​ + C_f ​− 2(C_r ​C_f​)^{1/2}) $$
 
 where:
 
