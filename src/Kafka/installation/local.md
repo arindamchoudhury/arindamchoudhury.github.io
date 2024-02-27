@@ -1,16 +1,21 @@
+## Extract
+```bash
 $ tar -xzf kafka_2.13-3.6.1.tgz
 $ mv kafka_2.13-3.6.1 ~/
 $ cd ~/kafka_2.13-3.6.1
 $ export PATH=$PATH:~/kafka_2.13-3.6.1/bin
-
+````
+## ZooKeeper
+```bash
 $ cd ~/kafka_2.13-3.6.1
 $ bin/zookeeper-server-start.sh config/zookeeper.properties
-
+````
+# Config
+```bash
 $ cd ~/kafka_2.13-3.6.1
 $ cp config/server.properties config/server0.properties
 $ cp config/server.properties config/server1.properties
 $ cp config/server.properties config/server2.properties
-
 
 $ vim config/server0.properties
  
@@ -28,11 +33,12 @@ $ vim config/server2.properties
 broker.id=2
 listeners=PLAINTEXT://localhost:9094
 log.dirs= /tmp/kafkainaction/kafka-logs-2
-
-
+````
+## Start
+```bash
 $ cd ~/kafka_2.13-3.6.1
 $ bin/kafka-server-start.sh config/server0.properties
 $ bin/kafka-server-start.sh config/server1.properties
 $ bin/kafka-server-start.sh config/server2.properties
-
+````
 
