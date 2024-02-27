@@ -3,6 +3,9 @@
 # Deep Learning 
 - [Introduction](./deep_learning/1_introduction.md)
 
+# Kafka
+- [Local Kafka](./kafka/installation/local.md)
+
 # Machine Learning
 - [Steps to Finetune BERT](./machine_learning/transformers/bert/steps_to_finetune_bert.md)
 
