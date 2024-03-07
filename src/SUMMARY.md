@@ -4,6 +4,7 @@
 - [Introduction](./deep_learning/1_introduction.md)
 
 # Kafka
+- [Kafka Overview](./Kafka/theory/overview.md)
 - [Local Kafka](./kafka/installation/local.md)
 - [Topic](./kafka/topic/cmd.md)
 
