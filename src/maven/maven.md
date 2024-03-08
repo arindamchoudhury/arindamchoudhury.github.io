@@ -328,3 +328,235 @@ A dependency can be marked as optional using the \<optional\> tag and putting in
     <optional>true</optional>
 </dependency>
 ```
+
+## Working with Plugins
+Maven at its heart is a plugin execution framework. It can get new capabilities by including plugins and leveraging their goals. This opens up Maven for constant innovation and enables it to address new use cases as they come up. There are two kinds of plugins:
+
+1. Build Plugins: These plugins run during build and are configured in the \<build\> element.
+2. Reporting Plugins: These plugins run during site generation and are configured in the \<reporting\> element.
+
+Some of the important plugins are listed [here](https://maven.apache.org/plugins/index.html) on the official Maven documentation and worth a cursory look.
+
+A plugin is identified by an artifactId, groupId, and a version. When we execute a maven command in the format **mvn \<phase\>**, plugin goals tied to the phase are executed. But we can also invoke a particular plugin goal individually using one of the following commands:
+
+1. groupId:artifactId:version:goal e.g., mvn org.apache.maven.plugins:maven-clean-plugin:2.5:clean
+2. groupId:artifactId:goal e.g., mvn org.apache.maven.plugins:maven-clean-plugin:clean
+3. prefix:goal e.g., mvn clean:clean
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>3.0.0</version>
+            <configuration>
+                <verbose>true</verbose>
+                <outputDirectory>/Project11/test</outputDirectory>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
+
+A plugin goal is nothing but some coded logic that executes when the goal is invoked. In Maven parlance, a goal is called a Maven plain Old Java Object or Mojo. Each mojo is an executable goal in Maven, and a plugin is a distribution of one or more related mojos.
+
+
+The \<executions\> element contains information about when we want to execute a particular goal of the plugin. The other elements are discussed below:
+```xml
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>3.2</version>
+    <executions>
+        <execution>
+            <id>my-special-exec</id>
+            <phase>install</phase>
+            <goals>
+                <goal>exec</goal>
+            </goals>
+            <configuration>
+                <executable>/Project12/myScript.sh</executable>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+1. id: is the identifier for the execution. IDs have to be unique among all executions of a single plugin within a POM. They don’t have to be unique across an inheritance hierarchy of POMs. We can invoke a plugin using the ID on the command line directly.
+
+2. phase: is the phase of a lifecycle the goal is bound to, i.e. the stage within the lifecycle when the goal would get executed. We can also skip the phase, if the goal already has a default phase bound to it within which it executes, e.g., as we saw in the case of the clean plugin. But if the goal is not bound to any lifecycle phase then it simply won’t be executed.
+
+3. goal: The name of the goal we wish to execute. For our example, we want to execute the goal exec. The plugin also offers another goal by the name of java.
+
+4. configuration: Under the configuration element we’ll add all the plugin specific parameters and their values. The astute reader may question why the \<configuration\> element for the clean plugin appears twice in the first exhibit. The reason is, prior to Maven 3.3.1 if we wanted to invoke a plugin goal directly from the command line, the configuration in the POM wouldn’t apply since it resided within the \<executions\> element and took effect only when the lifecycle phase it was bound to, was invoked. To have the configuration apply when the goal is invoked on the command line, the \<configuration\> element had to be taken outside of \<executions\>. With the latest Maven version, this isn’t the case anymore as we can also invoke a goal with a particular execution context using the execution ID as follows:
+
+```bash
+mvn <plugin-prefix>:<plugin-goal>@<execution-id>
+
+## e.g. for our example, the invocation will be:
+mvn exec:exec@my-special-exec
+```
+Note, that if we try to invoke the plugin goal by itself on the command line mvn exec:exec, it’ll fail because there’s no associated configuration. We can duplicate the \<configuration\> element from the \<execution\> section and insert it after the \<executions\> element in the POM file. This would allow the goal to execute by itself without having to be part of a lifecycle phase, because the configuration outside the \<executions\> applies globally to all invocations of the plugin.
+
+5. dependencies: Though not covered in this example, if a plugin is dependent on other artifacts, we can add them as a dependency and specify the desired version for the plugin to use.
+
+6. inherited: Plugin configuration is propagated to child POMs by default but in case we want to break the inheritance, we can use the \<inherited\> tag and set it to false. We’ll see a practical example of its use in later lessons.
+
+We have already covered \<dependencyManagement\> and how it can be used to factor out common dependencies and their associated versions in one place. The \<pluginManagement\> tag offers similar functionality from the perspective of plugins.
+
+```xml
+<build>
+    <pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>my-special-exec</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${project.parent.basedir}/myScript.sh</executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </pluginManagement>
+</build>
+```
+
+The parent POM file has the exec-maven-plugin configuration from the previous lesson, but it is wrapped inside the \<pluginManagement\> element. Note that adding the plugin details inside the \<pluginManagement\> element will not cause the plugin to execute for an inheriting child project. The child project must include the plugin coordinates in its \<build\> section for the plugin to execute with the configuration inherited from the parent POM. 
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.datajek</groupId>
+    <artifactId>project13-child</artifactId>
+    <version>1</version>
+
+    <name>Child</name>
+
+    <parent>
+        <groupId>io.datajek</groupId>
+        <artifactId>project13</artifactId>
+        <version>1</version>
+    </parent>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
+```
+
+Note that we have specified the complete information required to run the plugin goal. Also, the path to the script is specified as ${project.parent.basedir} because when we run the plugin goal from the child project, it’ll have to refer to the parent’s base directory. But we could also leave out details to be filled in by the inheriting child projects or have them override the existing details.
+
+## Build Profiles
+
+The notion of a profile when building Maven projects stems from the need for build portability. The ease with which a particular project can be built for different environments is referred to as build portability.
+
+A build can be non-portable, that is the project can only be built under specific circumstances and criteria. A build can be portable across environments, that is the project can be built in test, stage, or production environments. A project build may be portable within an organization, e.g., dependencies are only available within the organization’s local repository. Finally, a build can be universally portable, i.e., anyone can download the source code for such a project and build it.
+
+The concept of a profile allows Maven to use an alternative set of configuration values that set or override default values. Using profiles, we can customize a build for different environments. For instance, the database to connect to may have a different name in test vs production.
+
+Let’s consider an example, say we want to execute a script test.sh in the test environment and a script prod.sh in the production environment. We can achieve this using profiles. The POM file for the project is shown below:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.datajek</groupId>
+    <artifactId>project14</artifactId>
+    <version>1</version>
+    <name>Project14</name>
+
+    <profiles>
+        <profile>
+            <id>test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>my-special-exec</id>
+                                <configuration>
+                                    <executable>/Project14/testScript.sh</executable>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>my-special-exec</id>
+                                <configuration>
+                                    <executable>/Project14/prodScript.sh
+                                    </executable>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>my-special-exec</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    
+</project>
+```
+In the above POM we have defined two profiles, test and prod. Note, that each profile overrides the configuration for the exec-maven-plugin plugin’s exec goal. Within the profile element we can override almost any of the elements one would expect to see under the project tag. Following is a complete list of tags that can be overridden in a profile as referenced from the official [documentation](https://maven.apache.org/guides/introduction/introduction-to-profiles.html#which-areas-of-a-pom-can-be-customized-by-each-type-of-profile-w).

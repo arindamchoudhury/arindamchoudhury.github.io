@@ -10,7 +10,9 @@ Another option to be aware of is using an idempotent producer. The term idempote
 
 Another configuration property that applies to our scenario is the acks key, which stands for acknowledgments. This controls how many acknowledgments the producer needs to receive from the partition leader’s followers before it returns a completed request. The valid values for this property are all, -1, 1, and 0. The values all or -1 are the strongest available option for this configuration setting.
 
+## Timestamps
 Recent versions of the producer record contain a timestamp on the events you send. A user can either pass the time into the constructor as a Java type long when sending a ProducerRecord Java object or the current system time. The actual time that is used in the message can stay as this value, or it can be a broker timestamp that occurs when the message is logged. Setting the topic configuration message.timestamp.type to CreateTime uses the time set by the client, whereas setting it to LogAppendTime uses the broker time.
+
 
 ```java
 Properties kaProperties = new Properties(); 
@@ -28,3 +30,39 @@ producer.close();
 ```
 Waiting on the response directly in a synchronous way ensures that the code is handling each record’s results as they come back before another message is sent. The focus is on delivering the messages without loss, more than on speed!
 
+```java
+public class AlertTrendingProducer {
+ 
+  private static final Logger log =
+      LoggerFactory.getLogger(AlertTrendingProducer.class);
+ 
+  public static void main(String[] args)
+      throws InterruptedException, ExecutionException {
+ 
+    Properties kaProperties = new Properties();
+    kaProperties.put("bootstrap.servers",
+      "localhost:9092,localhost:9093,localhost:9094");
+    kaProperties.put("key.serializer",
+      AlertKeySerde.class.getName());
+    kaProperties.put("value.serializer",
+      "org.apache.kafka.common.serialization.StringSerializer");
+ 
+    try (Producer<Alert, String> producer =
+      new KafkaProducer<>(kaProperties)) {
+ 
+      Alert alert = new Alert(0, "Stage 0", "CRITICAL", "Stage 0 stopped");
+      ProducerRecord<Alert, String> producerRecord =
+          new ProducerRecord<>("kinaction_alerttrend",
+            alert, alert.getAlertMessage());
+ 
+      RecordMetadata result = producer.send(producerRecord).get();
+      log.info("kinaction_info offset = {}, topic = {}, timestamp = {}",
+               result.offset(), result.topic(), result.timestamp());
+    }
+  }
+}
+```
+
+So far in our examples of writing to Kafka, the data was directed to a topic with no additional metadata provided from the client. Because the topics are made up of partitions that sit on the brokers, Kafka provides a default way to send messages to a specific partition. The default for a message with no key (which we used in the examples thus far) was a round-robin assignment strategy prior to Kafka version 2.4. In versions after 2.4, messages without keys use a sticky partition strategy. However, sometimes we have specific ways that we want our data to be partitioned. One way to take control of this is to write our own unique partitioner class.
+
+The client also has the ability to control what partition it writes to by configuring a unique partitioner.
