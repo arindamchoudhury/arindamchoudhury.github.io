@@ -560,3 +560,97 @@ Let’s consider an example, say we want to execute a script test.sh in the test
 </project>
 ```
 In the above POM we have defined two profiles, test and prod. Note, that each profile overrides the configuration for the exec-maven-plugin plugin’s exec goal. Within the profile element we can override almost any of the elements one would expect to see under the project tag. Following is a complete list of tags that can be overridden in a profile as referenced from the official [documentation](https://maven.apache.org/guides/introduction/introduction-to-profiles.html#which-areas-of-a-pom-can-be-customized-by-each-type-of-profile-w).
+
+Great, so we can use profiles for environment-specific customizations, but we may encounter a situation where we want to override certain configurations for all projects rather than a single one. Adding a profile section for each project can become cumbersome. For situations such as these, Maven allows for specifying profiles at various levels of applicability as shown below:
+
+1. Per Project: We can define a \<profile\> in a project’s POM and it is applicable only for that project.
+
+2. Per User: We can define profiles in a file named settings.xml under the local repository for a user at the location %USER_HOME%/.m2/settings.xml. The profile will be applicable to all projects for that user.
+
+3. Per Machine (Globally): Finally, profiles can be defined for all users and their projects on a particular machine/host by adding profiles in the settings.xml file under the Maven’s installation directory at (${maven.home}/conf/settings.xml).
+
+A profile can be triggered/activated in one of the following ways:
+
+1. Explicitly: We have already seen this where we activate a profile using the -P switch.
+
+2. Through Maven settings: We can activate a profile by including it in the <activeprofiles> element in the settings.xml file.
+
+3. Based on environment variables: Within a <profile> section we can set a Java version, presence/absence of a system property or the value of a system property to be the trigger for executing the profile.
+
+4. OS settings: Profiles can also be activated when a particular operating system is detected. This may be helpful in case you want to build the project for specific platforms.
+
+5. Present or missing files: Finally, profiles can also be triggered by the presence or absence of files.
+
+We can find the active profiles for the project using the command below:
+```bash
+mvn help:active-profiles
+```
+
+## Archetypes
+
+Archetype is a project templating toolkit. Using the archetype mechanism, an author can create Maven project templates for users, and provide them with the means to generate parameterized versions of those project templates. Developers can quickly create and start working with new projects that are already set up with best practices and standards.
+
+Maven provides several archetype artifacts and some of the important ones are listed below:
+
+1. maven-archetype-archetype: An archetype to generate a sample archetype project.
+2. maven-archetype-j2ee-simple: An archetype to generate a simplified sample J2EE application.
+3. maven-archetype-mojo: An archetype to generate a sample Maven plugin.
+4. maven-archetype-plugin: An archetype to generate a sample Maven plugin.
+5. maven-archetype-plugin-site: An archetype to generate a sample Maven plugin site.
+6. maven-archetype-portlet: An archetype to generate a sample JSR-268 Portlet.
+7. maven-archetype-quickstart: An archetype to generate a sample Maven project.
+8. maven-archetype-simple: An archetype to generate a simple Maven project.
+9. maven-archetype-site: An archetype to generate a sample Maven site which demonstrates some of the supported document types like APT, XDoc, and FML and demonstrates how to i18n your site.
+10. maven-archetype-site-simple: An archetype to generate a sample Maven site.
+11. maven-archetype-webapp: An archetype to generate a sample Maven Webapp project.
+
+Note that in the above list, there is also an archetype to create a template project for creating an archetype project. Maven helps you get started quickly with an archetype project.
+
+```bash
+# Create a directory MyProject
+mkdir MyProject
+
+# Change directory to MyProject
+cd MyProject
+
+# Create a quickstart archetype project using the command below. Note we pass-in
+# the archetype we want to templatize from using the system property -DarchetypeArtifactId
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4
+
+# You'll be asked for the groupId for your project. Feel free to enter
+# a value of your liking. We'll be using io.datajek
+#
+# Define value for property 'groupId': io.datajek
+
+# Next you'll be asked for the artifactId, which will be the name of the
+# project. We'll choose MySuperJar
+#
+# Define value for property 'artifactId': MySuperJar                            
+
+# Next, will enter the version of the project. We'll enter 1.0
+#
+# Define value for property 'version' 1.0-SNAPSHOT: : 1.0
+
+# Next, you'll be asked to enter the package name. We chose mypackage
+#
+# Define value for property 'package' io.datajek: : mypackage
+
+# Maven will now present the values you entered and ask for a
+# confirmation. Enter the character 'Y' when prompted.
+
+# At this point Maven will create the project files and directories.
+# according to the template. Feel free to browse and look around.
+ls MySuperJar
+
+# The template creates a class App that has a HelloWorld message
+ls MySuperJar/src/main/java/mypackage/App.java
+cat MySuperJar/src/main/java/mypackage/App.java
+
+# You can build the project and see the jar being produced
+cd MySuperJar
+mvn package
+
+# You can run the class as follows. Replace the package name accordingly.
+java -cp target/MySuperJar-1.0.jar mypackage.App
+```
