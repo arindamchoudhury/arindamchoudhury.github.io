@@ -27,13 +27,50 @@
     line-height: 1.5;
     font-size: 16px;
   }
+  .shell {
+    display: grid;
+    grid-template-columns: 240px minmax(0, var(--maxw));
+    gap: 28px;
+    justify-content: center;
+    align-items: start;
+    padding: 32px 16px;
+  }
   .page {
     max-width: var(--maxw);
-    margin: 32px auto;
     background: var(--bg);
     padding: 48px 56px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
     border-radius: 4px;
+  }
+
+  /* Sidebar — notes links */
+  .sidebar {
+    position: sticky;
+    top: 32px;
+    background: var(--bg);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    border-radius: 4px;
+    padding: 22px 24px;
+  }
+  .sidebar h2 {
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 5px;
+    margin: 0 0 14px;
+  }
+  .sidebar ul.links { list-style: none; padding: 0; margin: 0; }
+  .sidebar ul.links li { margin-bottom: 14px; }
+  .sidebar ul.links li:last-child { margin-bottom: 0; }
+  .sidebar ul.links a { font-weight: 600; color: var(--accent); }
+  .sidebar ul.links .desc {
+    display: block;
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 2px;
   }
   a { color: var(--accent-light); text-decoration: none; }
   a:hover { text-decoration: underline; }
@@ -117,8 +154,17 @@
     text-align: center;
   }
 
+  /* Collapse sidebar into a single column on narrow screens */
+  @media (max-width: 960px) {
+    .shell { grid-template-columns: 1fr; max-width: var(--maxw); }
+    .sidebar { position: static; order: 2; }
+    .page { order: 1; }
+  }
+
   @media (max-width: 600px) {
-    .page { margin: 0; padding: 28px 20px; box-shadow: none; border-radius: 0; }
+    .shell { padding: 0; gap: 16px; }
+    .page { padding: 28px 20px; box-shadow: none; border-radius: 0; }
+    .sidebar { box-shadow: none; border-radius: 0; border-top: 1px solid var(--rule); }
     h1 { font-size: 1.7rem; }
     .skills { grid-template-columns: 1fr; gap: 2px; }
     .skills dt { margin-top: 8px; }
@@ -127,6 +173,8 @@
 
   @media print {
     body { background: #fff; font-size: 11pt; }
+    .shell { display: block; padding: 0; }
+    .sidebar { display: none; }
     .page { margin: 0; max-width: none; box-shadow: none; padding: 0; border-radius: 0; }
     a { color: var(--ink); }
     footer { display: none; }
@@ -136,7 +184,23 @@
 </style>
 </head>
 <body>
-<main class="page">
+<div class="shell">
+
+  <aside class="sidebar">
+    <h2>Notes &amp; Writing</h2>
+    <ul class="links">
+      <li>
+        <a href="https://arindamchoudhury.github.io/spark-gyan/">PySpark Reading Notes</a>
+        <span class="desc">Apache Spark / PySpark study notes</span>
+      </li>
+      <li>
+        <a href="https://github.com/arindamchoudhury">GitHub</a>
+        <span class="desc">Projects &amp; source repositories</span>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="page">
 
   <header>
     <h1>Arindam Choudhury</h1>
@@ -335,6 +399,8 @@
     Built with plain HTML &amp; CSS · Hosted on GitHub Pages
   </footer>
 
-</main>
+  </main>
+
+</div>
 </body>
 </html>
