@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arindam Choudhury — Data Engineer</title>
+<meta name="description" content="Arindam Choudhury — Data Engineer with 11 years building cloud data platforms on AWS, GCP, and Databricks. PySpark ETL, multi-cloud data warehouses, Terraform.">
+<meta name="author" content="Arindam Choudhury">
+<link rel="canonical" href="https://arindamchoudhury.github.io/">
+<style>
+  :root {
+    --accent: #1f3a5f;
+    --accent-light: #3a5f8a;
+    --ink: #222;
+    --muted: #666;
+    --rule: #d8dee6;
+    --bg: #ffffff;
+    --maxw: 820px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: #eef1f4;
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-size: 16px;
+  }
+  .page {
+    max-width: var(--maxw);
+    margin: 32px auto;
+    background: var(--bg);
+    padding: 48px 56px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    border-radius: 4px;
+  }
+  a { color: var(--accent-light); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header { margin-bottom: 28px; }
+  h1 {
+    font-size: 2.2rem;
+    color: var(--accent);
+    margin: 0 0 2px;
+    letter-spacing: 0.5px;
+  }
+  .role {
+    font-size: 1.05rem;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  .contact {
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    align-items: center;
+  }
+  .contact span.sep { color: var(--rule); }
+
+  section { margin-top: 26px; }
+  h2 {
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 5px;
+    margin: 0 0 14px;
+  }
+  p { margin: 0 0 10px; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: 180px 1fr; gap: 6px 18px; }
+  .skills dt { font-weight: 600; color: var(--accent); }
+  .skills dd { margin: 0; }
+
+  /* Entries (experience / education / projects / certs) */
+  .entry { margin-bottom: 16px; }
+  .entry:last-child { margin-bottom: 0; }
+  .entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .entry-head .org { font-weight: 700; color: var(--accent); font-size: 1.05rem; }
+  .entry-head .place { font-weight: 400; color: var(--muted); font-style: italic; font-size: 0.95rem; }
+  .entry-head .dates { color: var(--muted); font-style: italic; font-size: 0.9rem; white-space: nowrap; }
+  .note { color: var(--muted); font-style: italic; font-size: 0.9rem; margin: 2px 0 8px; }
+
+  .subrole { margin: 10px 0 4px; }
+  .subrole-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .subrole-head .title { font-weight: 600; }
+  .subrole-head .dates { color: var(--muted); font-style: italic; font-size: 0.88rem; white-space: nowrap; }
+
+  ul { margin: 6px 0 0; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+
+  .proj-tags { color: var(--accent-light); font-size: 0.85rem; font-style: italic; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 28px; }
+  .langs { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+  .langs b { color: var(--accent); }
+
+  footer {
+    margin-top: 30px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .page { margin: 0; padding: 28px 20px; box-shadow: none; border-radius: 0; }
+    h1 { font-size: 1.7rem; }
+    .skills { grid-template-columns: 1fr; gap: 2px; }
+    .skills dt { margin-top: 8px; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; font-size: 11pt; }
+    .page { margin: 0; max-width: none; box-shadow: none; padding: 0; border-radius: 0; }
+    a { color: var(--ink); }
+    footer { display: none; }
+    section { page-break-inside: avoid; }
+    .entry { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header>
+    <h1>Arindam Choudhury</h1>
+    <p class="role">Data Engineer</p>
+    <div class="contact">
+      <span>Barcelona, Spain</span>
+      <span class="sep">•</span>
+      <a href="https://www.linkedin.com/in/archoudhury/" rel="me">linkedin.com/in/archoudhury</a>
+      <span class="sep">•</span>
+      <a href="https://github.com/arindamchoudhury" rel="me">github.com/arindamchoudhury</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>Professional Summary</h2>
+    <p>Data Engineer with eleven years of industry experience building cloud data platforms on AWS, GCP, and Databricks, backed by a five-year research foundation in High Performance Computing. Specialist in PySpark ETL, multi-cloud data warehouses, and Terraform-provisioned infrastructure. AWS Certified Data Engineer with a long track record of taking data systems from prototype into production.</p>
+  </section>
+
+  <section>
+    <h2>Technical Skills</h2>
+    <dl class="skills">
+      <dt>Languages</dt><dd>Python, SQL, Java</dd>
+      <dt>ETL &amp; Big Data</dt><dd>Apache Spark (PySpark), Databricks, Apache Airflow, Apache Kafka</dd>
+      <dt>AWS</dt><dd>Lambda, Glue, Athena, S3, EMR, Redshift, CloudWatch</dd>
+      <dt>GCP</dt><dd>BigQuery, GCS, Dataproc, Cloud SQL, Cloud Monitoring</dd>
+      <dt>Infrastructure</dt><dd>Terraform (IaC), Git</dd>
+      <dt>ML &amp; Data Science</dt><dd>PyTorch, Pandas, Scikit-learn</dd>
+      <dt>Tools</dt><dd>VS Code, Jupyter Notebook, Anaconda</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span><span class="org">Ackstorm</span> <span class="place">Barcelona, Spain</span></span>
+        <span class="dates">Apr 2015 — Present</span>
+      </div>
+      <p class="note">Ecmanaged was acquired by Ackstorm in 2017; roles below span both entities.</p>
+
+      <div class="subrole">
+        <div class="subrole-head">
+          <span class="title">Data Engineer</span>
+          <span class="dates">Jan 2017 — Present</span>
+        </div>
+        <ul>
+          <li>Architected and deployed Databricks workspaces and clusters with Terraform, enabling repeatable, version-controlled environments.</li>
+          <li>Authored production ETL jobs in Databricks (PySpark) for ingestion, transformation, and analytics workloads.</li>
+          <li>Built Databricks dashboards to deliver curated metrics and data insights to business stakeholders.</li>
+          <li>Designed and deployed data warehouses on AWS (S3, Glue, Athena) and GCP (GCS, BigQuery).</li>
+          <li>Built serverless, event-driven data pipelines on AWS Lambda.</li>
+          <li>Developed Python services to move and reconcile data between heterogeneous database systems.</li>
+        </ul>
+      </div>
+
+      <div class="subrole">
+        <div class="subrole-head">
+          <span class="title">Senior Cloud Engineer (Ecmanaged)</span>
+          <span class="dates">Mar 2016 — Dec 2017</span>
+        </div>
+        <ul>
+          <li>Built a cloud infrastructure monitoring stack using Telegraf, InfluxDB, and Alerta.</li>
+          <li>Developed the monitoring system's REST API with the Falcon Python web framework.</li>
+          <li>Implemented metric collectors that pulled data from AWS CloudWatch and GCP Cloud Monitoring.</li>
+          <li>Wrote Python automation that generated alerts and notifications from configurable thresholds.</li>
+        </ul>
+      </div>
+
+      <div class="subrole">
+        <div class="subrole-head">
+          <span class="title">Junior Developer (Ecmanaged)</span>
+          <span class="dates">Apr 2015 — Feb 2016</span>
+        </div>
+        <ul>
+          <li>Developed Python applications and refactored portions of the Ecmanaged monitoring platform's codebase.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span><span class="org">Universitat Autònoma de Barcelona</span> <span class="place">Bellaterra, Spain</span></span>
+        <span class="dates">Oct 2010 — Mar 2015</span>
+      </div>
+      <div class="subrole">
+        <div class="subrole-head">
+          <span class="title">PhD Research Fellow</span>
+          <span class="dates">Oct 2010 — Mar 2015</span>
+        </div>
+        <ul>
+          <li>Researched performance improvements for Hadoop / MapReduce workloads running on High Performance Computing clusters; supervised at the Computer Architecture and Operating Systems Department.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Selected Projects</h2>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="org">Databricks Lakehouse on AWS</span>
+        <span class="proj-tags">Databricks • PySpark • Terraform • AWS</span>
+      </div>
+      <p>Designed a Terraform-provisioned Databricks platform running PySpark ETL jobs end-to-end—from raw ingestion through curated tables—and surfaced the results to business users through Databricks dashboards.</p>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="org">Multi-Cloud Data Warehouses</span>
+        <span class="proj-tags">AWS • GCP • Python • SQL</span>
+      </div>
+      <p>Stood up production data warehouses on two clouds in parallel: S3 + Glue + Athena on AWS, and GCS + BigQuery on GCP. Built supporting Python services for cross-system data movement and serverless ingestion via AWS Lambda.</p>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="org">Cloud Infrastructure Monitoring Platform</span>
+        <span class="proj-tags">Python • Telegraf • InfluxDB • Alerta • Falcon</span>
+      </div>
+      <p>Built an end-to-end monitoring stack collecting metrics from AWS CloudWatch and GCP Cloud Monitoring, exposed through a Falcon REST API and a Python alerting engine for thresholds and notifications.</p>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="org">Hadoop on HPC — PhD Research</span>
+        <span class="proj-tags">Hadoop • MapReduce • HPC clusters</span>
+      </div>
+      <p>Five years of doctoral research at Universitat Autònoma de Barcelona on improving the performance of Hadoop workloads when scheduled on traditional High Performance Computing infrastructure.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="org">Master in High Performance Computing</span>
+        <span class="dates">2010 — 2011</span>
+      </div>
+      <p class="note">Universitat Autònoma de Barcelona — Spain</p>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="org">Master of Engineering in Software Engineering</span>
+        <span class="dates">2007 — 2009</span>
+      </div>
+      <p class="note">Thapar Institute of Engineering &amp; Technology — India</p>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="org">Bachelor of Technology in Information Technology</span>
+        <span class="dates">2002 — 2006</span>
+      </div>
+      <p class="note">West Bengal University of Technology — India</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Certifications</h2>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="org">AWS Certified Data Engineer — Associate</span>
+        <span class="dates">Nov 2025 — Nov 2028</span>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="org">Astronomer Certification: DAG Authoring for Apache Airflow 3</span>
+        <span class="dates">Issued Nov 2025</span>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="org">Google Cloud Certified Professional Data Engineer</span>
+        <span class="dates">Aug 2017 — Aug 2019</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Continuing Education</h2>
+    <ul>
+      <li>Data Engineering Specialization — DeepLearning.AI on Coursera</li>
+      <li>Machine Learning Specialization — Stanford University &amp; DeepLearning.AI on Coursera</li>
+      <li>Deep Learning Nanodegree — Udacity</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Languages</h2>
+    <p class="langs"><span><b>English</b> Proficient</span><span><b>Spanish</b> Intermediate</span><span><b>Bengali</b> Native</span></p>
+  </section>
+
+  <footer>
+    Built with plain HTML &amp; CSS · Hosted on GitHub Pages
+  </footer>
+
+</main>
+</body>
+</html>
